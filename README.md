@@ -1,2 +1,4 @@
 # MlpStrategy
-建立基于mlp的策略
+import tensorflow as tf
+import numpy as np
+
