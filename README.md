@@ -4,7 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import xlrd
 
-
 batch_size=10
 epoch=1750
 test_size=0
