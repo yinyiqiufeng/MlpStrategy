@@ -7,7 +7,9 @@ import xlrd
 batch_size=10
 epoch=1750
 test_size=0
-class strategy():  #定义策略状态
+
+
+class strategy():
     def __init__(self,Money,Stoploss,Stopwin,Value,Position=0,Aveprice=0,Realpl=0,Pl=0):
         global money
         global stoploss
@@ -33,12 +35,14 @@ class strategy():  #定义策略状态
         self.initvalue=Value  #从上一次止盈或止损后的净值，用来每次判断止盈和止损时点
         self.action=1 #若为1，则表示策略有效，若为0，则不有效
         self.positionrange=[]
+        
     def update(self,quote):#更新行情
             self.pl=(quote-self.aveprice)*self.position
             self.value=quote*self.position+self.money
             self.curve.append(self.value)
             self.positionrange.append(self.position)
             self.quotenum+=1
+            
     def trade(self,quote,percent):#购买比率，可以为负
         self.update(quote)
         if self.aveprice==0:
@@ -48,6 +52,7 @@ class strategy():  #定义策略状态
         self.position=self.position+percent*self.money/quote
         self.money=self.money*(1-percent)
         self.tradenum+=1
+        
     def maxdrawback(self):#最大回撤
         tem_max=self.money  #初始化
         result=0
@@ -55,8 +60,8 @@ class strategy():  #定义策略状态
             ter_max=abs((self.curve[i]-max(self.curve[0:i+1]))/max(self.curve[0:i+1]))
             if result<ter_max:
                 result=ter_max
-
         return result
+        
     def sharpratio(self,riskfreerate,year):#夏普比
         return ((self.curve[len(self.curve)-1]-self.curve[0])/(year*self.curve[0])-riskfreerate)/(np.sqrt(np.var(self.curve))/(self.curve[0]*year))
     def stoplosstrade(self,quote):  #止损
