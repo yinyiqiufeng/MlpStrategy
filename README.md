@@ -7,9 +7,9 @@ import xlrd
 batch_size=10  
 epoch=1750  
 test_size=0  
-
-
+   
 class strategy():  
+
     def __init__(self,Money,Stoploss,Stopwin,Value,Position=0,Aveprice=0,Realpl=0,Pl=0):  
         global money  
         global stoploss  
@@ -34,7 +34,7 @@ class strategy():
         self.stopwinnum=0  #止盈次数  
         self.initvalue=Value  #从上一次止盈或止损后的净值，用来每次判断止盈和止损时点  
         self.action=1 #若为1，则表示策略有效，若为0，则不有效  
-        self.positionrange=[]  
+        self.positionrange=[]   
         
     def update(self,quote):#更新行情
             self.pl=(quote-self.aveprice)*self.position
@@ -85,11 +85,10 @@ class strategy():
         self.stopwinnum+=1
         
 
-NNresult=strategy(Money=1000000,Stoploss=0.03,Stopwin=0.1,Value=1000000)  #策略基本控制参数
-
-excelfile=xlrd.open_workbook('C:\\Users\\Administrator\\Desktop\\资源\\机器学习\\Tensorflow学习\\UsingData.xlsx')
-data=excelfile.sheet_by_name("变化率")
-datavalue=excelfile.sheet_by_name("绝对值")
+NNresult=strategy(Money=1000000,Stoploss=0.03,Stopwin=0.1,Value=1000000)  #策略基本控制参数  
+excelfile=xlrd.open_workbook('C:\\Users\\Administrator\\Desktop\\资源\\机器学习\\Tensorflow学习\\UsingData.xlsx')  
+data=excelfile.sheet_by_name("变化率")  
+datavalue=excelfile.sheet_by_name("绝对值")  
 
 def add_layer(inputs, in_size, out_size, activation_function=None):
     # 增加层数
