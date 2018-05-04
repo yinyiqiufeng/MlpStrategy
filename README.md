@@ -1,40 +1,40 @@
 # MlpStrategy
-import tensorflow as tf
-import numpy as np
-import matplotlib.pyplot as plt
-import xlrd
+import tensorflow as tf  
+import numpy as np  
+import matplotlib.pyplot as plt  
+import xlrd  
 
-batch_size=10
-epoch=1750
-test_size=0
+batch_size=10  
+epoch=1750  
+test_size=0  
 
 
-class strategy():
-    def __init__(self,Money,Stoploss,Stopwin,Value,Position=0,Aveprice=0,Realpl=0,Pl=0):
-        global money
-        global stoploss
-        global stopwin
-        global position #持仓数量
-        global value
-        global aveprice
-        global pl
-        global curve,quotenum,tradenum
-        self.money=Money   #可用现金余额
-        self.stoploss=Stoploss   #止损（百分数）
-        self.stopwin=Stopwin    #止盈（百分数）
-        self.position=Position   #持仓量
-        self.value=Value   #总价值
-        self.aveprice=Aveprice   #成本价
-        self.realpl=Realpl  #真实盈亏
-        self.pl=Pl    #浮动盈亏
-        self.curve=[]  #净值曲线
-        self.quotenum=0   #行情次数
-        self.tradenum=0  #交易次数
-        self.stoplossnum=0  #止损次数
-        self.stopwinnum=0  #止盈次数
-        self.initvalue=Value  #从上一次止盈或止损后的净值，用来每次判断止盈和止损时点
-        self.action=1 #若为1，则表示策略有效，若为0，则不有效
-        self.positionrange=[]
+class strategy():  
+    def __init__(self,Money,Stoploss,Stopwin,Value,Position=0,Aveprice=0,Realpl=0,Pl=0):  
+        global money  
+        global stoploss  
+        global stopwin  
+        global position #持仓数量  
+        global value  
+        global aveprice  
+        global pl  
+        global curve,quotenum,tradenum  
+        self.money=Money   #可用现金余额  
+        self.stoploss=Stoploss   #止损（百分数）  
+        self.stopwin=Stopwin    #止盈（百分数）  
+        self.position=Position   #持仓量  
+        self.value=Value   #总价值  
+        self.aveprice=Aveprice   #成本价  
+        self.realpl=Realpl  #真实盈亏  
+        self.pl=Pl    #浮动盈亏  
+        self.curve=[]  #净值曲线  
+        self.quotenum=0   #行情次数  
+        self.tradenum=0  #交易次数  
+        self.stoplossnum=0  #止损次数  
+        self.stopwinnum=0  #止盈次数  
+        self.initvalue=Value  #从上一次止盈或止损后的净值，用来每次判断止盈和止损时点  
+        self.action=1 #若为1，则表示策略有效，若为0，则不有效  
+        self.positionrange=[]  
         
     def update(self,quote):#更新行情
             self.pl=(quote-self.aveprice)*self.position
